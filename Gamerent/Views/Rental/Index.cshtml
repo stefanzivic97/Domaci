@@ -1,0 +1,66 @@
+﻿@model IEnumerable<Gamerent.Models.Rental>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+<form action="/Rental/Save" method="post">
+
+
+    <label for="Customers"> Customers</label>
+    <select name="CustomerId" id="Customers"></select>
+
+    <label for="Games"> Game</label>
+    <select name="GameId" id="Games">
+    </select>
+
+    <input type="submit" />
+</form>
+
+
+@section scripts
+{
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function () {
+
+            $.ajax({
+                url: "/api/customers",
+            }).done(function (data) {
+                console.log(data)
+                for (let i = 0; i < data.length; i++) {
+                    //  console.log(data[i])
+
+                    let option = '"<option value="' + data[i].id + '">' + data[i].name + '</option>"';
+                    console.log("LogIN option: " + option)
+                    $("#Customers").append(option);
+                }
+
+            });
+
+            $(document).ready(function () {
+
+                $.ajax({
+                    url: "/api/game",
+                }).done(function (data) {
+                    console.log(data)
+                    for (let i = 0; i < data.length; i++) {
+                        //  console.log(data[i])
+
+                        let option = '"<option value="' + data[i].id + '">' + data[i].name + '</option>"';
+                        console.log("LogIN option: " + option)
+                        $("#Games").append(option);
+                    }
+
+                });
+            });
+
+        });
+    </script>
+}
+
